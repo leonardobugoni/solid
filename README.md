@@ -385,7 +385,7 @@ Dessa forma, os clientes podem implementar apenas as interfaces que precisam e n
 
 ### Princípio da Inversão de Dependência (DIP)
 
-O Princípio da Inversão de Dependência (DIP) é um dos princípios SOLID que enfatiza que os módulos de alto nível não devem depender dos módulos de baixo nível, mas sim de abstrações. Isso significa que em vez de os módulos de alto nível dependerem diretamente dos módulos de baixo nível, eles devem depender de interfaces ou abstrações, permitindo que as implementações sejam trocadas facilmente sem afetar o código de alto nível.
+O Princípio da Inversão de Dependência (DIP) é um dos princípios SOLID que enfatiza que os módulos de alto nível¹ não devem depender dos módulos de baixo nível¹, mas sim de abstrações. Isso significa que em vez de os módulos de alto nível dependerem diretamente dos módulos de baixo nível, eles devem depender de interfaces ou abstrações, permitindo que as implementações sejam trocadas facilmente sem afetar o código de alto nível.
 
 Para entender melhor, vamos considerar um exemplo simples em Java. Suponha que temos uma classe `Carro` que depende diretamente de uma classe `Motor`.
 
@@ -448,6 +448,4 @@ Dessa forma, podemos criar novas implementações da interface `Motor` e injetá
 
 
 
-Os módulos de alto e baixo nível mencionados na resposta são conceitos usados para descrever a estrutura de um sistema de software. Esses termos não têm uma definição precisa, mas geralmente se referem à hierarquia de componentes em um sistema.
-
-Em termos gerais, um módulo de baixo nível é aquele que realiza tarefas específicas e geralmente tem pouca ou nenhuma dependência de outros módulos. Por outro lado, um módulo de alto nível é aquele que coordena a lógica geral do sistema e geralmente tem muitas dependências de outros módulos.
+¹Os módulos de alto e baixo nível mencionados na resposta são conceitos usados para descrever a estrutura de um sistema de software. Esses termos não têm uma definição precisa, mas geralmente se referem à hierarquia de componentes em um sistema. Em termos gerais, um módulo de baixo nível é aquele que realiza tarefas específicas e geralmente tem pouca ou nenhuma dependência de outros módulos. Por outro lado, um módulo de alto nível é aquele que coordena a lógica geral do sistema e geralmente tem muitas dependências de outros módulos.
