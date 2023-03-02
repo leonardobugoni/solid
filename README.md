@@ -165,3 +165,94 @@ Agora a classe `Pagamento` está aberta para extensão, pois novos tipos de paga
 
 Em resumo, o princípio OCP ajuda a tornar o software mais fácil de evoluir e manter, pois permite a extensão do comportamento do software sem a necessidade de modificar o código-fonte existente.
 
+### Princípio da Substituição de Liskov (LSP)
+
+O Princípio da Substituição de Liskov (LSP) é um dos princípios SOLID que enfatiza que um objeto deve poder ser substituído por qualquer instância de sua classe base sem alterar o comportamento do programa. Isso significa que uma classe derivada deve ser substituível pela classe base sem afetar a funcionalidade do programa. O objetivo é garantir que o código que utiliza a classe base possa trabalhar com suas subclasses sem problemas.
+
+Antes de aplicar o princípio LSP, é comum vermos códigos que utilizam herança de forma inadequada, resultando em subclasses que não são substituíveis pelas suas classes base. Por exemplo:
+
+```java
+public class Retangulo {
+    private double largura;
+    private double altura;
+    
+    public Retangulo(double largura, double altura) {
+        this.largura = largura;
+        this.altura = altura;
+    }
+    
+    public double getLargura() {
+        return largura;
+    }
+    
+    public void setLargura(double largura) {
+        this.largura = largura;
+    }
+    
+    public double getAltura() {
+        return altura;
+    }
+    
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+    
+    public double area() {
+        return largura * altura;
+    }
+}
+
+public class Quadrado extends Retangulo {
+    public Quadrado(double lado) {
+        super(lado, lado);
+    }
+    
+    public void setLargura(double largura) {
+        super.setLargura(largura);
+        super.setAltura(largura);
+    }
+    
+    public void setAltura(double altura) {
+        super.setLargura(altura);
+        super.setAltura(altura);
+    }
+}
+```
+
+Podemos ver que a classe `Quadrado` herda da classe `Retangulo` e sobrescreve os métodos `setLargura()` e `setAltura()`. No entanto, isso viola o princípio LSP, pois um objeto `Quadrado` não pode ser substituído por um objeto `Retangulo`. Por exemplo, se o método `area()` for chamado em um objeto `Quadrado`, o resultado será diferente do que seria esperado para um objeto `Retangulo` com a mesma largura e altura.
+
+Depois de aplicar o princípio LSP, a classe `Retangulo` seria modificada para não ter dependência de um método que não possa ser substituído pelas suas subclasses. Isso pode ser feito removendo os métodos `setLargura()` e `setAltura()` e adicionando um construtor que inicializa ambos os campos largura e altura. Por exemplo:
+
+```java
+public class Retangulo {
+    private double largura;
+    private double altura;
+    
+    public Retangulo(double largura, double altura) {
+        this.largura = largura;
+        this.altura = altura;
+    }
+    
+    public double getLargura() {
+        return largura;
+    }
+    
+    public double getAltura() {
+        return altura;
+    }
+    
+    public double area() {
+        return largura * altura;
+    }
+}
+
+public class Quadrado extends Retangulo {
+    public Quadrado(double lado) {
+        super(lado, lado);
+    }
+}
+```
+
+Dessa forma, podemos garantir que a classe `Quadrado` seja substituível pela classe `Retangulo`, sem afetar a funcionalidade do programa, pois a classe `Retangulo` define os atributos largura e altura, enquanto a classe `Quadrado` define o atributo lado. Com isso, podemos usar a classe `Quadrado` de forma intercambiável com a classe `Retangulo` quando necessário.
+
+
