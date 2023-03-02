@@ -10,6 +10,8 @@
 
 - DIP - Princípio da Inversão de Dependência (Dependency Inversion Principle): os módulos de alto nível não devem depender dos módulos de baixo nível, ambos devem depender de abstrações, ou seja, a dependência entre os módulos deve ser invertida.
 
+### Princípio da Responsabilidade Única (SRP)
+
 O Princípio da Responsabilidade Única (SRP) é um dos princípios SOLID que enfatiza que uma classe deve ter apenas uma responsabilidade, ou seja, ela deve ter apenas uma razão para mudar. Isso significa que a classe deve ser responsável por uma única tarefa ou função no sistema, tornando-a mais coesa e fácil de entender, modificar e testar.
 
 Antes de aplicar o princípio SRP, é comum vermos classes que têm várias responsabilidades diferentes, o que pode torná-las confusas e difíceis de manter. Por exemplo:
@@ -93,4 +95,73 @@ public class Transacao {
 Agora a classe `Pagamento` tem apenas uma responsabilidade, que é processar o pagamento. As responsabilidades de enviar o email de confirmação e registrar a transação foram delegadas para outras classes que são especializadas nessas tarefas. Isso torna o código mais modular, mais fácil de entender e de manter.
 
 Em resumo, o princípio SRP ajuda a criar classes mais coesas e focadas, o que torna o código mais fácil de entender, modificar e testar.
+
+
+### Princípio Aberto-Fechado (OCP)
+
+O Princípio Aberto-Fechado (OCP) é um dos princípios SOLID que enfatiza que um software deve estar aberto para extensão, mas fechado para modificação. Isso significa que o comportamento do software deve ser estendido sem modificar o seu código-fonte existente. O objetivo é evitar alterações em código já testado e validado, tornando a manutenção e evolução do software mais fácil e segura.
+
+Antes de aplicar o princípio OCP, é comum vermos códigos que necessitam de modificações sempre que uma nova funcionalidade é adicionada. Por exemplo:
+
+```java
+public class Pagamento {
+    private double valor;
+    private String tipoPagamento;
+    
+    public Pagamento(double valor, String tipoPagamento) {
+        this.valor = valor;
+        this.tipoPagamento = tipoPagamento;
+    }
+    
+    public void processarPagamento() {
+        if (tipoPagamento.equals("cartao")) {
+            // processar pagamento com cartão de crédito
+        } else if (tipoPagamento.equals("boleto")) {
+            // processar pagamento com boleto bancário
+        } else {
+            // processar pagamento com outra forma de pagamento
+        }
+    }
+}
+```
+
+Se quisermos adicionar um novo tipo de pagamento, teríamos que modificar a classe `Pagamento` adicionando uma nova condição else if no método processarPagamento(). Isso pode levar a um código complexo e difícil de manter.
+
+Depois de aplicar o princípio OCP, a classe Pagamento seria modificada para que novos tipos de pagamento possam ser adicionados sem alterar o código existente. Isso pode ser feito usando uma interface `PagamentoTipo` e implementando classes concretas para cada tipo de pagamento. Por exemplo:
+
+```java
+public interface PagamentoTipo {
+    public void processarPagamento(double valor);
+}
+
+public class PagamentoCartao implements PagamentoTipo {
+    public void processarPagamento(double valor) {
+        // processar pagamento com cartão de crédito
+    }
+}
+
+public class PagamentoBoleto implements PagamentoTipo {
+    public void processarPagamento(double valor) {
+        // processar pagamento com boleto bancário
+    }
+}
+
+public class Pagamento {
+    private PagamentoTipo tipoPagamento;
+    private double valor;
+    
+    public Pagamento(PagamentoTipo tipoPagamento, double valor) {
+        this.tipoPagamento = tipoPagamento;
+        this.valor = valor;
+    }
+    
+    public void processarPagamento() {
+        tipoPagamento.processarPagamento(valor);
+    }
+}
+```
+
+Agora a classe `Pagamento` está aberta para extensão, pois novos tipos de pagamento podem ser adicionados simplesmente implementando a interface `PagamentoTipo`. E, ao mesmo tempo, está fechada para modificação, pois não é necessário alterar o código existente para adicionar novos tipos de pagamento.
+
+Em resumo, o princípio OCP ajuda a tornar o software mais fácil de evoluir e manter, pois permite a extensão do comportamento do software sem a necessidade de modificar o código-fonte existente.
 
