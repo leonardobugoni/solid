@@ -125,9 +125,9 @@ public class Pagamento {
 }
 ```
 
-Se quisermos adicionar um novo tipo de pagamento, teríamos que modificar a classe `Pagamento` adicionando uma nova condição else if no método processarPagamento(). Isso pode levar a um código complexo e difícil de manter.
+Se quisermos adicionar um novo tipo de pagamento, teríamos que modificar a classe `Pagamento` adicionando uma nova condição else if no método `processarPagamento()`. Isso pode levar a um código complexo e difícil de manter.
 
-Depois de aplicar o princípio OCP, a classe Pagamento seria modificada para que novos tipos de pagamento possam ser adicionados sem alterar o código existente. Isso pode ser feito usando uma interface `PagamentoTipo` e implementando classes concretas para cada tipo de pagamento. Por exemplo:
+Depois de aplicar o princípio OCP, a classe `Pagamento` seria modificada para que novos tipos de pagamento possam ser adicionados sem alterar o código existente. Isso pode ser feito usando uma interface `PagamentoTipo` e implementando classes concretas para cada tipo de pagamento. Por exemplo:
 
 ```java
 public interface PagamentoTipo {
@@ -260,7 +260,7 @@ Dessa forma, podemos garantir que a classe `Quadrado` seja substituível pela cl
 
 O Princípio da Segregação de Interface (ISP) é um dos princípios SOLID que enfatiza que as interfaces devem ser separadas para que os clientes não precisem depender de métodos que não usam. Isso significa que é melhor ter várias interfaces menores, cada uma com um conjunto coeso de métodos, do que uma única interface grande que contém todos os métodos possíveis.
 
-Para entender melhor, vamos considerar um exemplo relacionado a `Pagamentos` em Java. Suponha que temos uma interface `Pagamento` que contém vários métodos, incluindo `processarPagamento()`, `enviarRecibo()`, `cancelarPagamento()` e `gerarRelatorio()`. No entanto, nem todos os clientes que usam a interface precisam de todos esses métodos. Alguns clientes só precisam processar o pagamento, enquanto outros só precisam enviar o recibo ou cancelar o pagamento.
+Para entender melhor, vamos considerar um exemplo relacionado a Pagamentos em Java. Suponha que temos uma interface `Pagamento` que contém vários métodos, incluindo `processarPagamento()`, `enviarRecibo()`, `cancelarPagamento()` e `gerarRelatorio()`. No entanto, nem todos os clientes que usam a interface precisam de todos esses métodos. Alguns clientes só precisam processar o pagamento, enquanto outros só precisam enviar o recibo ou cancelar o pagamento.
 
 Antes de aplicar o princípio ISP, a interface `Pagamento` força todos os clientes a implementar todos os métodos, mesmo que não sejam necessários. Isso pode levar a classes de clientes inchadas e desnecessariamente complicadas.
 
@@ -445,3 +445,9 @@ public class Carro {
 ```
 
 Dessa forma, podemos criar novas implementações da interface `Motor` e injetá-las na classe `Carro`, sem afetar o código existente. Por exemplo, se quisermos adicionar uma nova implementação para um motor a hidrogênio, podemos criar uma nova classe que implementa a interface `Motor` e injetá-la na classe `Carro`. Isso permite uma maior flexibilidade e modularidade no código, além de facilitar os testes e a manutenção.
+
+
+
+Os módulos de alto e baixo nível mencionados na resposta são conceitos usados para descrever a estrutura de um sistema de software. Esses termos não têm uma definição precisa, mas geralmente se referem à hierarquia de componentes em um sistema.
+
+Em termos gerais, um módulo de baixo nível é aquele que realiza tarefas específicas e geralmente tem pouca ou nenhuma dependência de outros módulos. Por outro lado, um módulo de alto nível é aquele que coordena a lógica geral do sistema e geralmente tem muitas dependências de outros módulos.
