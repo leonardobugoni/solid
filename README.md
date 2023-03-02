@@ -253,6 +253,195 @@ public class Quadrado extends Retangulo {
 }
 ```
 
-Dessa forma, podemos garantir que a classe `Quadrado` seja substituível pela classe `Retangulo`, sem afetar a funcionalidade do programa, pois a classe `Retangulo` define os atributos largura e altura, enquanto a classe `Quadrado` define o atributo lado. Com isso, podemos usar a classe `Quadrado` de forma intercambiável com a classe `Retangulo` quando necessário.
+Dessa forma, podemos garantir que a classe `Quadrado` seja substituível pela classe `Retangulo`, sem afetar a funcionalidade do programa, pois a classe `Retangulo` define os atributos `largura` e `altura`, enquanto a classe `Quadrado` define o atributo `lado`. Com isso, podemos usar a classe `Quadrado` de forma intercambiável com a classe `Retangulo` quando necessário.
 
 
+### Princípio da Segregação de Interface (ISP)
+
+O Princípio da Segregação de Interface (ISP) é um dos princípios SOLID que enfatiza que as interfaces devem ser separadas para que os clientes não precisem depender de métodos que não usam. Isso significa que é melhor ter várias interfaces menores, cada uma com um conjunto coeso de métodos, do que uma única interface grande que contém todos os métodos possíveis.
+
+Para entender melhor, vamos considerar um exemplo relacionado a `Pagamentos` em Java. Suponha que temos uma interface `Pagamento` que contém vários métodos, incluindo `processarPagamento()`, `enviarRecibo()`, `cancelarPagamento()` e `gerarRelatorio()`. No entanto, nem todos os clientes que usam a interface precisam de todos esses métodos. Alguns clientes só precisam processar o pagamento, enquanto outros só precisam enviar o recibo ou cancelar o pagamento.
+
+Antes de aplicar o princípio ISP, a interface `Pagamento` força todos os clientes a implementar todos os métodos, mesmo que não sejam necessários. Isso pode levar a classes de clientes inchadas e desnecessariamente complicadas.
+
+```java
+public interface Pagamento {
+    public void processarPagamento();
+    public void enviarRecibo();
+    public void cancelarPagamento();
+    public void gerarRelatorio();
+}
+
+public class PagamentoCartaoCredito implements Pagamento {
+    public void processarPagamento() {
+        System.out.println("Processando pagamento com cartão de crédito...");
+    }
+
+    public void enviarRecibo() {
+        System.out.println("Enviando recibo por e-mail...");
+    }
+
+    public void cancelarPagamento() {
+        System.out.println("Cancelando pagamento...");
+    }
+
+    public void gerarRelatorio() {
+        System.out.println("Gerando relatório...");
+    }
+}
+
+public class Cliente {
+    private Pagamento pagamento;
+
+    public Cliente(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public void processarPagamento() {
+        pagamento.processarPagamento();
+    }
+
+    public void enviarRecibo() {
+        pagamento.enviarRecibo();
+    }
+
+    public void cancelarPagamento() {
+        pagamento.cancelarPagamento();
+    }
+
+    public void gerarRelatorio() {
+        pagamento.gerarRelatorio();
+    }
+}
+```
+
+Depois de aplicar o princípio ISP, podemos separar a interface `Pagamento` em interfaces menores e mais coesas, como `ProcessamentoPagamento`, `EnvioRecibo` e `CancelamentoPagamento`. Dessa forma, os clientes podem implementar apenas as interfaces necessárias e não precisam se preocupar com métodos que não usam.
+
+```java
+public interface ProcessamentoPagamento {
+    public void processarPagamento();
+}
+
+public interface EnvioRecibo {
+    public void enviarRecibo();
+}
+
+public interface CancelamentoPagamento {
+    public void cancelarPagamento();
+}
+
+public class PagamentoCartaoCredito implements ProcessamentoPagamento, EnvioRecibo, CancelamentoPagamento {
+    public void processarPagamento() {
+        System.out.println("Processando pagamento com cartão de crédito...");
+    }
+
+    public void enviarRecibo() {
+        System.out.println("Enviando recibo por e-mail...");
+    }
+
+    public void cancelarPagamento() {
+        System.out.println("Cancelando pagamento...");
+    }
+}
+
+public class ClienteProcessamentoPagamento {
+    private ProcessamentoPagamento pagamento;
+
+    public ClienteProcessamentoPagamento(ProcessamentoPagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public void processarPagamento() {
+        pagamento.processarPagamento();
+    }
+}
+
+public class ClienteEnvioRecibo {
+    private EnvioRecibo pagamento;
+
+    public ClienteEnvioRecibo(EnvioRecibo pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public void enviarRecibo() {
+        pagamento.enviarRecibo();
+    }
+}
+
+public class ClienteCancelamentoPagamento {
+    private CancelamentoPagamento pagamento;
+
+    public ClienteCancelamentoPagamento(CancelamentoPagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public void cancelarPagamento() {
+        pagamento.cancelarPagamento();
+    }
+}
+```
+
+Dessa forma, os clientes podem implementar apenas as interfaces que precisam e não precisam se preocupar com métodos desnecessários. Isso torna o código mais fácil de entender e manter, pois as interfaces são mais coesas e os clientes são mais específicos sobre seus requisitos.
+
+### Princípio da Inversão de Dependência (DIP)
+
+O Princípio da Inversão de Dependência (DIP) é um dos princípios SOLID que enfatiza que os módulos de alto nível não devem depender dos módulos de baixo nível, mas sim de abstrações. Isso significa que em vez de os módulos de alto nível dependerem diretamente dos módulos de baixo nível, eles devem depender de interfaces ou abstrações, permitindo que as implementações sejam trocadas facilmente sem afetar o código de alto nível.
+
+Para entender melhor, vamos considerar um exemplo simples em Java. Suponha que temos uma classe `Carro` que depende diretamente de uma classe `Motor`.
+
+Antes de aplicar o princípio DIP, a classe `Carro` depende diretamente da classe `Motor`. Isso torna a classe rígida e inflexível, pois é difícil trocar a implementação do motor sem afetar o código de alto nível.
+
+
+```java
+public class Motor {
+    public void ligar() {
+        System.out.println("Ligando motor...");
+    }
+}
+
+public class Carro {
+    private Motor motor;
+
+    public Carro() {
+        this.motor = new Motor();
+    }
+
+    public void ligar() {
+        motor.ligar();
+    }
+}
+```
+
+Depois de aplicar o princípio DIP, a classe `Carro` depende de uma interface abstrata `Motor`, em vez de uma implementação concreta. Isso permite que diferentes implementações da interface `Motor` sejam facilmente trocadas sem afetar o código de alto nível.
+
+```java
+public interface Motor {
+    public void ligar();
+}
+
+public class MotorCombustao implements Motor {
+    public void ligar() {
+        System.out.println("Ligando motor de combustão...");
+    }
+}
+
+public class MotorEletrico implements Motor {
+    public void ligar() {
+        System.out.println("Ligando motor elétrico...");
+    }
+}
+
+public class Carro {
+    private Motor motor;
+
+    public Carro(Motor motor) {
+        this.motor = motor;
+    }
+
+    public void ligar() {
+        motor.ligar();
+    }
+}
+```
+
+Dessa forma, podemos criar novas implementações da interface `Motor` e injetá-las na classe `Carro`, sem afetar o código existente. Por exemplo, se quisermos adicionar uma nova implementação para um motor a hidrogênio, podemos criar uma nova classe que implementa a interface `Motor` e injetá-la na classe `Carro`. Isso permite uma maior flexibilidade e modularidade no código, além de facilitar os testes e a manutenção.
